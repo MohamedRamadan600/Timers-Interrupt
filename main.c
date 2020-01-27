@@ -40,38 +40,47 @@
 #include "led.h"
 #include "timers.h"
 #include "myinterrupt.h"
-
-/*
-#include "avr/interrupt.h"
-*/
-extern uint16_t OverFlowTicks;
+#include <util/delay.h>
+#include "dcMotor.h"
 
 
 int main (void)
 {
-		
-
-	/* Insert system clock initialization code here (sysclk_init()). */
-				/*Testing GPIO Functions*/
-	gpioPinDirection(LED_0_GPIO,LED_0_BIT|LED_1_BIT|LED_2_BIT|LED_3_BIT,OUTPUT);
-	gpioPinDirection(BTN_0_GPIO,BTN_0_BIT|BTN_1_BIT,INPUT);
-	gpioPinDirection(BTN_1_GPIO,BTN_1_BIT,INPUT);
-	Led_Init(LED_0);
-	//SREG |= (1<<7);
-	Set_Bit(SREG,7);						//set Global interrupt
-	timer0Init(T0_NORMAL_MODE, T0_OC0_DIS,T0_PRESCALER_64,0,0,T0_POLLING);
-	timer1Init(T1_COMP_MODE_OCR1A_TOP,T1_OC1_DIS,T1_PRESCALER_64,0, 250, 0,0,T1_POLLING);
-    timer2Init(T2_NORMAL_MODE,T2_OC2_DIS,T2_PRESCALER_64,0,0,0,T2_POLLING);
-
 	
-				
+	timer0Init(T0_NORMAL_MODE,T0_OC0_DIS,T0_PRESCALER_8,0,0,T0_INTERRUPT_NORMAL);
+	timer2Init(T2_NORMAL_MODE,T2_OC2_DIS,T2_PRESCALER_64,0,0,0,T2_POLLING);
+	MotorDC_Init(MOT_1);
+	MotorDC_Init(MOT_2);
+	
+	SREG |= (1<<7);							//enable Global interrupt
+			
 				/*Testing LED Driver Functions*/
-while(1){	
-	Led_On(LED_0);
-	timer2DelayMs(1000);
-	Led_Off(LED_0);
-	timer2DelayMs(1000);
-}
+				
+//Moving Forward for 5 seconds
+		MotorDC_Dir(MOT_1,FORWARD);
+		MotorDC_Dir(MOT_2,FORWARD);
+		MotorDC_Speed_PollingWithT0(50);
+		MotorDC_Dir(MOT_1,STOP);
+		MotorDC_Dir(MOT_2,STOP);
+		
+//moving Backward for 5 seconds
+		MotorDC_Dir(MOT_1,BACKWARD);
+		MotorDC_Dir(MOT_2,BACKWARD);
+		MotorDC_Speed_PollingWithT0(50);
+		MotorDC_Dir(MOT_1,STOP);
+		MotorDC_Dir(MOT_2,STOP);
+		timer0Stop();
+//Roate By 90 degree		
+		MotorDC_Dir(MOT_1,FORWARD);
+		MotorDC_Dir(MOT_2,STOP);
+		gpioPinWrite(GPIOD,BIT4,HIGH);
+		timer2DelayMs(100);
+		MotorDC_Dir(MOT_1,STOP);
+		MotorDC_Dir(MOT_2,STOP);
+				
+		while(1){
 	
-return 0;	
-}
+		}
+	
+	return 0;	
+		}

@@ -5,7 +5,7 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
                               sevenSeg.o (__tablejump2__)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_clear_bss.o)
-                              req8.o (__do_clear_bss)
+                              dcMotor.o (__do_clear_bss)
 
 Allocating common symbols
 Common symbol       size              file
@@ -13,6 +13,8 @@ Common symbol       size              file
 prescaler_Timer0    0x2               timers.o
 prescaler_Timer2    0x2               timers.o
 PressCounter        0x1               req8.o
+counter_motor_speed
+                    0x1               dcMotor.o
 prescaler_Timer1    0x2               timers.o
 DelayCounter        0x2               req8.o
 
@@ -20,6 +22,15 @@ Discarded input sections
 
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega32a/avr5/crtatmega32a.o
+ .group         0x00000000        0x8 dcMotor.o
+ .group         0x00000000        0x8 dcMotor.o
+ .group         0x00000000        0x8 dcMotor.o
+ .group         0x00000000        0x8 dcMotor.o
+ .group         0x00000000        0x8 dcMotor.o
+ .group         0x00000000        0x8 dcMotor.o
+ .text          0x00000000        0x0 dcMotor.o
+ .data          0x00000000        0x0 dcMotor.o
+ .bss           0x00000000        0x0 dcMotor.o
  .group         0x00000000        0x8 led.o
  .group         0x00000000        0x8 led.o
  .group         0x00000000        0x8 led.o
@@ -27,8 +38,32 @@ Discarded input sections
  .text          0x00000000        0x0 led.o
  .data          0x00000000        0x0 led.o
  .bss           0x00000000        0x0 led.o
+ .text.Led_Init
+                0x00000000       0x40 led.o
+ .text.Led_On   0x00000000       0x40 led.o
+ .text.Led_Off  0x00000000       0x40 led.o
  .text.Led_Toggle
                 0x00000000       0x38 led.o
+ .debug_info    0x00000000      0x36a led.o
+ .debug_abbrev  0x00000000       0xb5 led.o
+ .debug_loc     0x00000000      0x1b0 led.o
+ .debug_aranges
+                0x00000000       0x38 led.o
+ .debug_ranges  0x00000000       0x28 led.o
+ .debug_macro   0x00000000       0x3c led.o
+ .debug_macro   0x00000000      0xa4e led.o
+ .debug_macro   0x00000000       0x28 led.o
+ .debug_macro   0x00000000       0x28 led.o
+ .debug_macro   0x00000000       0x40 led.o
+ .debug_line    0x00000000      0x158 led.o
+ .debug_str     0x00000000     0x2d53 led.o
+ .comment       0x00000000       0x31 led.o
+ .debug_frame   0x00000000       0x54 led.o
+ .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
+ .group         0x00000000        0x8 main.o
  .group         0x00000000        0x8 main.o
  .group         0x00000000        0x8 main.o
  .group         0x00000000        0x8 main.o
@@ -44,13 +79,21 @@ Discarded input sections
  .debug_macro   0x00000000       0x28 main.o
  .debug_macro   0x00000000       0x28 main.o
  .debug_macro   0x00000000       0x40 main.o
- .group         0x00000000        0x8 myinterrupt.o
+ .debug_macro   0x00000000      0x100 main.o
+ .debug_macro   0x00000000       0x46 main.o
  .group         0x00000000        0x8 myinterrupt.o
  .text          0x00000000        0x0 myinterrupt.o
  .data          0x00000000        0x0 myinterrupt.o
  .bss           0x00000000        0x0 myinterrupt.o
+ .debug_info    0x00000000       0x21 myinterrupt.o
+ .debug_abbrev  0x00000000       0x13 myinterrupt.o
+ .debug_aranges
+                0x00000000       0x18 myinterrupt.o
+ .debug_macro   0x00000000       0x11 myinterrupt.o
  .debug_macro   0x00000000      0xa4e myinterrupt.o
- .debug_macro   0x00000000       0x82 myinterrupt.o
+ .debug_line    0x00000000       0x30 myinterrupt.o
+ .debug_str     0x00000000     0x2b0d myinterrupt.o
+ .comment       0x00000000       0x31 myinterrupt.o
  .group         0x00000000        0x8 pushButton.o
  .group         0x00000000        0x8 pushButton.o
  .group         0x00000000        0x8 pushButton.o
@@ -74,7 +117,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x28 pushButton.o
  .debug_macro   0x00000000       0x3a pushButton.o
  .debug_line    0x00000000       0xfb pushButton.o
- .debug_str     0x00000000     0x2de1 pushButton.o
+ .debug_str     0x00000000     0x2dbd pushButton.o
  .comment       0x00000000       0x31 pushButton.o
  .debug_frame   0x00000000       0x34 pushButton.o
  .group         0x00000000        0x8 req8.o
@@ -102,7 +145,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3a req8.o
  .debug_macro   0x00000000       0x40 req8.o
  .debug_line    0x00000000      0x107 req8.o
- .debug_str     0x00000000     0x2e96 req8.o
+ .debug_str     0x00000000     0x2e72 req8.o
  .comment       0x00000000       0x31 req8.o
  .debug_frame   0x00000000       0x30 req8.o
  COMMON         0x00000000        0x3 req8.o
@@ -135,7 +178,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x28 sevenSeg.o
  .debug_macro   0x00000000       0x52 sevenSeg.o
  .debug_line    0x00000000      0x172 sevenSeg.o
- .debug_str     0x00000000     0x2e0d sevenSeg.o
+ .debug_str     0x00000000     0x2de9 sevenSeg.o
  .comment       0x00000000       0x31 sevenSeg.o
  .debug_frame   0x00000000       0x54 sevenSeg.o
  .group         0x00000000        0x8 SevenSegApp.o
@@ -159,7 +202,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x28 SevenSegApp.o
  .debug_macro   0x00000000       0x52 SevenSegApp.o
  .debug_line    0x00000000      0x104 SevenSegApp.o
- .debug_str     0x00000000     0x2dd1 SevenSegApp.o
+ .debug_str     0x00000000     0x2dad SevenSegApp.o
  .comment       0x00000000       0x31 SevenSegApp.o
  .debug_frame   0x00000000       0x40 SevenSegApp.o
  .group         0x00000000        0x8 softwareDelay.o
@@ -178,10 +221,12 @@ Discarded input sections
  .debug_macro   0x00000000       0x24 softwareDelay.o
  .debug_macro   0x00000000      0xa4e softwareDelay.o
  .debug_macro   0x00000000       0x28 softwareDelay.o
- .debug_line    0x00000000       0x73 softwareDelay.o
- .debug_str     0x00000000     0x2c13 softwareDelay.o
+ .debug_line    0x00000000       0x75 softwareDelay.o
+ .debug_str     0x00000000     0x2bef softwareDelay.o
  .comment       0x00000000       0x31 softwareDelay.o
  .debug_frame   0x00000000       0x24 softwareDelay.o
+ .group         0x00000000        0x8 timers.o
+ .group         0x00000000        0x8 timers.o
  .group         0x00000000        0x8 timers.o
  .group         0x00000000        0x8 timers.o
  .group         0x00000000        0x8 timers.o
@@ -198,12 +243,12 @@ Discarded input sections
                 0x00000000        0x4 timers.o
  .text.timer0Start
                 0x00000000        0xc timers.o
- .text.timer0Stop
-                0x00000000       0x16 timers.o
  .text.timer0DelayMs
                 0x00000000       0x30 timers.o
  .text.timer0DelayUs
-                0x00000000       0x4c timers.o
+                0x00000000        0x2 timers.o
+ .text.timer1Init
+                0x00000000       0x5a timers.o
  .text.timer1Set
                 0x00000000        0x4 timers.o
  .text.timer1Read
@@ -219,15 +264,20 @@ Discarded input sections
  .text.timer2Read
                 0x00000000        0x4 timers.o
  .bss.OverFlowTicks
-                0x00000000        0x2 timers.o
+                0x00000000        0x1 timers.o
  .bss.OverFlowTicksReq
                 0x00000000        0x2 timers.o
+ .bss.tick_time
+                0x00000000        0x2 timers.o
+ .bss.TickTime  0x00000000        0x2 timers.o
  .debug_macro   0x00000000      0xa4e timers.o
  .debug_macro   0x00000000       0x28 timers.o
  .debug_macro   0x00000000       0x2e timers.o
- .debug_macro   0x00000000       0x3a timers.o
+ .debug_macro   0x00000000       0x46 timers.o
  .debug_macro   0x00000000       0x40 timers.o
  .debug_macro   0x00000000       0x40 timers.o
+ .debug_macro   0x00000000       0x88 timers.o
+ .debug_macro   0x00000000       0x52 timers.o
  .group         0x00000000        0x8 gpio.o
  .group         0x00000000        0x8 gpio.o
  .group         0x00000000        0x8 gpio.o
@@ -315,6 +365,7 @@ user_signatures  0x00850000         0x00000400         rw !x
 Linker script and memory map
 
 LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega32a/avr5/crtatmega32a.o
+LOAD dcMotor.o
 LOAD led.o
 LOAD main.o
 LOAD myinterrupt.o
@@ -434,7 +485,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x5a8
+.text           0x00000000      0x488
  *(.vectors)
  .vectors       0x00000000       0x54 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega32a/avr5/crtatmega32a.o
                 0x00000000                __vector_default
@@ -491,105 +542,74 @@ END GROUP
  *(.init9)
  *(.text)
  .text          0x00000074        0x2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega32a/avr5/crtatmega32a.o
-                0x00000074                __vector_11
+                0x00000074                __vector_1
+                0x00000074                __vector_12
                 0x00000074                __bad_interrupt
+                0x00000074                __vector_6
+                0x00000074                __vector_3
+                0x00000074                __vector_13
+                0x00000074                __vector_17
+                0x00000074                __vector_19
+                0x00000074                __vector_7
+                0x00000074                __vector_5
+                0x00000074                __vector_4
+                0x00000074                __vector_9
+                0x00000074                __vector_2
+                0x00000074                __vector_15
+                0x00000074                __vector_8
+                0x00000074                __vector_14
+                0x00000074                __vector_10
+                0x00000074                __vector_16
+                0x00000074                __vector_18
+                0x00000074                __vector_20
                 0x00000076                . = ALIGN (0x2)
  *(.text.*)
- .text.Led_Init
-                0x00000076       0x38 led.o
-                0x00000076                Led_Init
- .text.Led_On   0x000000ae       0x38 led.o
-                0x000000ae                Led_On
- .text.Led_Off  0x000000e6       0x38 led.o
-                0x000000e6                Led_Off
- .text.main     0x0000011e       0x7a main.o
-                0x0000011e                main
- .text.__vector_1
-                0x00000198       0x16 myinterrupt.o
-                0x00000198                __vector_1
- .text.__vector_2
-                0x000001ae       0x16 myinterrupt.o
-                0x000001ae                __vector_2
- .text.__vector_3
-                0x000001c4       0x16 myinterrupt.o
-                0x000001c4                __vector_3
- .text.__vector_4
-                0x000001da       0x16 myinterrupt.o
-                0x000001da                __vector_4
- .text.__vector_5
-                0x000001f0       0x16 myinterrupt.o
-                0x000001f0                __vector_5
- .text.__vector_6
-                0x00000206       0x16 myinterrupt.o
-                0x00000206                __vector_6
- .text.__vector_7
-                0x0000021c       0x16 myinterrupt.o
-                0x0000021c                __vector_7
- .text.__vector_8
-                0x00000232       0x16 myinterrupt.o
-                0x00000232                __vector_8
- .text.__vector_9
-                0x00000248       0x16 myinterrupt.o
-                0x00000248                __vector_9
- .text.__vector_10
-                0x0000025e       0x16 myinterrupt.o
-                0x0000025e                __vector_10
- .text.__vector_12
-                0x00000274       0x16 myinterrupt.o
-                0x00000274                __vector_12
- .text.__vector_13
-                0x0000028a       0x16 myinterrupt.o
-                0x0000028a                __vector_13
- .text.__vector_14
-                0x000002a0       0x16 myinterrupt.o
-                0x000002a0                __vector_14
- .text.__vector_15
-                0x000002b6       0x16 myinterrupt.o
-                0x000002b6                __vector_15
- .text.__vector_16
-                0x000002cc       0x16 myinterrupt.o
-                0x000002cc                __vector_16
- .text.__vector_17
-                0x000002e2       0x16 myinterrupt.o
-                0x000002e2                __vector_17
- .text.__vector_18
-                0x000002f8       0x16 myinterrupt.o
-                0x000002f8                __vector_18
- .text.__vector_19
-                0x0000030e       0x16 myinterrupt.o
-                0x0000030e                __vector_19
- .text.__vector_20
-                0x00000324       0x16 myinterrupt.o
-                0x00000324                __vector_20
+ .text.MotorDC_Init
+                0x00000076       0x32 dcMotor.o
+                0x00000076                MotorDC_Init
+ .text.MotorDC_Dir
+                0x000000a8       0x9e dcMotor.o
+                0x000000a8                MotorDC_Dir
+ .text.MotorDC_Speed_PollingWithT0
+                0x00000146       0x52 dcMotor.o
+                0x00000146                MotorDC_Speed_PollingWithT0
+ .text.main     0x00000198       0x8e main.o
+                0x00000198                main
+ .text.__vector_11
+                0x00000226       0x88 timers.o
+                0x00000226                __vector_11
  .text.timer0Init
-                0x0000033a       0x90 timers.o
-                0x0000033a                timer0Init
- .text.timer1Init
-                0x000003ca       0x5a timers.o
-                0x000003ca                timer1Init
+                0x000002ae       0x36 timers.o
+                0x000002ae                timer0Init
+ .text.timer0Stop
+                0x000002e4       0x16 timers.o
+                0x000002e4                timer0Stop
+ .text.timer0SwPWM
+                0x000002fa        0xa timers.o
+                0x000002fa                timer0SwPWM
  .text.timer2Init
-                0x00000424       0x42 timers.o
-                0x00000424                timer2Init
+                0x00000304       0x42 timers.o
+                0x00000304                timer2Init
  .text.timer2Start
-                0x00000466        0xc timers.o
-                0x00000466                timer2Start
+                0x00000346        0xc timers.o
+                0x00000346                timer2Start
  .text.timer2Stop
-                0x00000472       0x16 timers.o
-                0x00000472                timer2Stop
+                0x00000352       0x16 timers.o
+                0x00000352                timer2Stop
  .text.timer2DelayMs
-                0x00000488       0x2c timers.o
-                0x00000488                timer2DelayMs
+                0x00000368       0x2c timers.o
+                0x00000368                timer2DelayMs
  .text.gpioPinDirection
-                0x000004b4       0x78 gpio.o
-                0x000004b4                gpioPinDirection
+                0x00000394       0x78 gpio.o
+                0x00000394                gpioPinDirection
  .text.gpioPinWrite
-                0x0000052c       0x78 gpio.o
-                0x0000052c                gpioPinWrite
-                0x000005a4                . = ALIGN (0x2)
+                0x0000040c       0x78 gpio.o
+                0x0000040c                gpioPinWrite
+                0x00000484                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000005a4        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x000005a4                _exit
-                0x000005a4                exit
+ .fini9         0x00000484        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00000484                _exit
+                0x00000484                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -608,11 +628,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000005a4        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000484        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000005a8                _etext = .
+                0x00000488                _etext = .
 
-.data           0x00800060        0x0 load address 0x000005a8
+.data           0x00800060        0x0 load address 0x00000488
                 [!provide]                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -624,26 +644,31 @@ END GROUP
                 0x00800060                _edata = .
                 [!provide]                PROVIDE (__data_end, .)
 
-.bss            0x00800060        0x8
+.bss            0x00800060        0x9
                 0x00800060                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.TickTime  0x00800060        0x2 timers.o
-                0x00800060                TickTime
+ .bss.SPWM_Flag
+                0x00800060        0x1 timers.o
+                0x00800060                SPWM_Flag
+ .bss.PWM1DC    0x00800061        0x1 timers.o
+                0x00800061                PWM1DC
  *(COMMON)
- COMMON         0x00800062        0x6 timers.o
-                0x00800062                prescaler_Timer0
-                0x00800064                prescaler_Timer2
-                0x00800066                prescaler_Timer1
-                0x00800068                PROVIDE (__bss_end, .)
-                0x000005a8                __data_load_start = LOADADDR (.data)
-                0x000005a8                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x00800062        0x1 dcMotor.o
+                0x00800062                counter_motor_speed
+ COMMON         0x00800063        0x6 timers.o
+                0x00800063                prescaler_Timer0
+                0x00800065                prescaler_Timer2
+                0x00800067                prescaler_Timer1
+                0x00800069                PROVIDE (__bss_end, .)
+                0x00000488                __data_load_start = LOADADDR (.data)
+                0x00000488                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800068        0x0
+.noinit         0x00800069        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x00800068                _end = .
+                0x00800069                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -685,10 +710,9 @@ END GROUP
 
 .comment        0x00000000       0x30
  *(.comment)
- .comment       0x00000000       0x30 led.o
+ .comment       0x00000000       0x30 dcMotor.o
                                  0x31 (size before relaxing)
  .comment       0x00000030       0x31 main.o
- .comment       0x00000030       0x31 myinterrupt.o
  .comment       0x00000030       0x31 timers.o
  .comment       0x00000030       0x31 gpio.o
 
@@ -712,77 +736,68 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x210
+.debug_aranges  0x00000000      0x168
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x38 led.o
+                0x00000000       0x30 dcMotor.o
  .debug_aranges
-                0x00000038       0x20 main.o
+                0x00000030       0x20 main.o
  .debug_aranges
-                0x00000058       0xb0 myinterrupt.o
+                0x00000050       0xc0 timers.o
  .debug_aranges
-                0x00000108       0xb0 timers.o
- .debug_aranges
-                0x000001b8       0x58 gpio.o
+                0x00000110       0x58 gpio.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x19dd
+.debug_info     0x00000000     0x1a9f
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega32a/avr5/crtatmega32a.o
- .debug_info    0x000004e6      0x36a led.o
- .debug_info    0x00000850      0x4eb main.o
- .debug_info    0x00000d3b      0x1d0 myinterrupt.o
- .debug_info    0x00000f0b      0x880 timers.o
- .debug_info    0x0000178b      0x252 gpio.o
+ .debug_info    0x000004e6      0x49a dcMotor.o
+ .debug_info    0x00000980      0x4f4 main.o
+ .debug_info    0x00000e74      0x9d9 timers.o
+ .debug_info    0x0000184d      0x252 gpio.o
 
-.debug_abbrev   0x00000000      0x883
+.debug_abbrev   0x00000000      0x913
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x4a3 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega32a/avr5/crtatmega32a.o
- .debug_abbrev  0x000004a3       0xb5 led.o
- .debug_abbrev  0x00000558       0xb0 main.o
- .debug_abbrev  0x00000608       0x31 myinterrupt.o
- .debug_abbrev  0x00000639      0x15b timers.o
- .debug_abbrev  0x00000794       0xef gpio.o
+ .debug_abbrev  0x000004a3       0xe0 dcMotor.o
+ .debug_abbrev  0x00000583       0xc7 main.o
+ .debug_abbrev  0x0000064a      0x1da timers.o
+ .debug_abbrev  0x00000824       0xef gpio.o
 
-.debug_line     0x00000000      0xc94
+.debug_line     0x00000000      0xcd3
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x115 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega32a/avr5/crtatmega32a.o
- .debug_line    0x00000115      0x158 led.o
- .debug_line    0x0000026d      0x127 main.o
- .debug_line    0x00000394      0x1ec myinterrupt.o
- .debug_line    0x00000580      0x445 timers.o
- .debug_line    0x000009c5      0x2cf gpio.o
+ .debug_line    0x00000115      0x1ab dcMotor.o
+ .debug_line    0x000002c0      0x2d4 main.o
+ .debug_line    0x00000594      0x470 timers.o
+ .debug_line    0x00000a04      0x2cf gpio.o
 
-.debug_frame    0x00000000      0x508
+.debug_frame    0x00000000      0x324
  *(.debug_frame)
- .debug_frame   0x00000000       0x54 led.o
- .debug_frame   0x00000054       0x24 main.o
- .debug_frame   0x00000078      0x228 myinterrupt.o
- .debug_frame   0x000002a0      0x1d4 timers.o
- .debug_frame   0x00000474       0x94 gpio.o
+ .debug_frame   0x00000000       0x4c dcMotor.o
+ .debug_frame   0x0000004c       0x24 main.o
+ .debug_frame   0x00000070      0x220 timers.o
+ .debug_frame   0x00000290       0x94 gpio.o
 
-.debug_str      0x00000000     0x40c1
+.debug_str      0x00000000     0x540f
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega32a/avr5/crtatmega32a.o
- .debug_str     0x00000196     0x2cf1 led.o
-                               0x2d77 (size before relaxing)
- .debug_str     0x00002e87      0xf58 main.o
-                               0x3c94 (size before relaxing)
- .debug_str     0x00003ddf       0x13 myinterrupt.o
-                               0x2eae (size before relaxing)
- .debug_str     0x00003df2      0x244 timers.o
-                               0x3bd5 (size before relaxing)
- .debug_str     0x00004036       0x8b gpio.o
-                               0x33a0 (size before relaxing)
+ .debug_str     0x00000196     0x35a8 dcMotor.o
+                               0x362e (size before relaxing)
+ .debug_str     0x0000373e     0x17f1 main.o
+                               0x4dc7 (size before relaxing)
+ .debug_str     0x00004f2f      0x447 timers.o
+                               0x40d3 (size before relaxing)
+ .debug_str     0x00005376       0x99 gpio.o
+                               0x337c (size before relaxing)
 
-.debug_loc      0x00000000     0x11ba
+.debug_loc      0x00000000      0xe80
  *(.debug_loc)
- .debug_loc     0x00000000      0x1b0 led.o
- .debug_loc     0x000001b0      0x37d myinterrupt.o
- .debug_loc     0x0000052d      0x61e timers.o
- .debug_loc     0x00000b4b      0x66f gpio.o
+ .debug_loc     0x00000000      0x1ab dcMotor.o
+ .debug_loc     0x000001ab      0x666 timers.o
+ .debug_loc     0x00000811      0x66f gpio.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -802,29 +817,32 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x220
+.debug_ranges   0x00000000      0x170
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x28 led.o
- .debug_ranges  0x00000028       0x10 main.o
- .debug_ranges  0x00000038       0xa0 myinterrupt.o
- .debug_ranges  0x000000d8      0x100 timers.o
- .debug_ranges  0x000001d8       0x48 gpio.o
+ .debug_ranges  0x00000000       0x20 dcMotor.o
+ .debug_ranges  0x00000020       0x10 main.o
+ .debug_ranges  0x00000030       0xf8 timers.o
+ .debug_ranges  0x00000128       0x48 gpio.o
 
-.debug_macro    0x00000000      0xf4d
+.debug_macro    0x00000000     0x166f
  *(.debug_macro)
- .debug_macro   0x00000000       0x3c led.o
- .debug_macro   0x0000003c      0xa4e led.o
- .debug_macro   0x00000a8a       0x28 led.o
- .debug_macro   0x00000ab2       0x28 led.o
- .debug_macro   0x00000ada       0x40 led.o
- .debug_macro   0x00000b1a       0x7a main.o
- .debug_macro   0x00000b94       0x40 main.o
- .debug_macro   0x00000bd4      0x100 main.o
- .debug_macro   0x00000cd4       0x3a main.o
- .debug_macro   0x00000d0e       0x82 main.o
- .debug_macro   0x00000d90       0x1a myinterrupt.o
- .debug_macro   0x00000daa       0x77 timers.o
- .debug_macro   0x00000e21       0xfa timers.o
- .debug_macro   0x00000f1b       0x32 gpio.o
+ .debug_macro   0x00000000       0x5a dcMotor.o
+ .debug_macro   0x0000005a      0xa4e dcMotor.o
+ .debug_macro   0x00000aa8       0x28 dcMotor.o
+ .debug_macro   0x00000ad0       0x28 dcMotor.o
+ .debug_macro   0x00000af8       0x4c dcMotor.o
+ .debug_macro   0x00000b44      0x100 dcMotor.o
+ .debug_macro   0x00000c44       0x46 dcMotor.o
+ .debug_macro   0x00000c8a       0xd1 main.o
+ .debug_macro   0x00000d5b       0x40 main.o
+ .debug_macro   0x00000d9b       0x88 main.o
+ .debug_macro   0x00000e23       0x10 main.o
+ .debug_macro   0x00000e33      0x1c9 main.o
+ .debug_macro   0x00000ffc      0x2fc main.o
+ .debug_macro   0x000012f8      0x166 main.o
+ .debug_macro   0x0000145e       0x52 main.o
+ .debug_macro   0x000014b0       0x93 timers.o
+ .debug_macro   0x00001543       0xfa timers.o
+ .debug_macro   0x0000163d       0x32 gpio.o
 OUTPUT(GpioChallenge.elf elf32-avr)
 LOAD linker stubs

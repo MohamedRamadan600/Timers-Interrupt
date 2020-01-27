@@ -9,6 +9,10 @@
 #define DCMOTOR_H_
 #include "dcMotorConfig.h"
 #include "timers.h"
+#include "gpio.h"
+
+extern uint8_t Motor_Enable;
+uint8_t counter_motor_speed;
 
 typedef enum En_motorType_t{
 	MOT_1,

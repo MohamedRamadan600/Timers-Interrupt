@@ -1,10 +1,10 @@
 #include "timers.h"
 #include "led.h"
 #include "pushButton.h"
+#include "myinterrupt.h"
+#include "dcMotor.h"
 
-
-
-#define F_CPU  (16)								//16MHZ
+#define F_CPU  16000000								//16MHZ
 uint16_t TickTime=0;	
 uint16_t prescaler_Timer0;						//global variable to store the time of the clock
 												//cycle after prescaling in timer0
@@ -12,44 +12,48 @@ uint16_t prescaler_Timer1;						//global variable to store the time of the clock
 												//cycle after prescaling in timer1
 uint16_t prescaler_Timer2;						//global variable to store the time of the clock
 												//cycle after prescaling in timer1
+uint16_t tick_time = 0;
 uint16_t OverFlowTicksReq=0;
 
-volatile uint16_t OverFlowTicks=0;				//global variable to check the number of over flows to match the time delay
+volatile uint8_t OverFlowTicks=0;				//global variable to check the number of over flows to match the time delay
+uint8_t PWM1DC=0;            
+uint8_t SPWM_Flag=0;
 
 
+InterruptServiceRoutine(TIMER0_OVRF_vect)
+{
+SPWM_Flag++;
+if(SPWM_Flag==PWM1DC){
+gpioPinWrite(MOTOR_EN_1_GPIO,MOTOR_EN_1_BIT,LOW);
+gpioPinWrite(MOTOR_EN_2_GPIO,MOTOR_EN_2_BIT,LOW);
 
+}
+if(SPWM_Flag==100){
+	gpioPinWrite(MOTOR_EN_1_GPIO,MOTOR_EN_1_BIT,HIGH);
+	gpioPinWrite(MOTOR_EN_2_GPIO,MOTOR_EN_2_BIT,HIGH);
+SPWM_Flag=0;
+}
+timer0Set(176);
+
+}
 
 //initialize timer0
 void timer0Init(En_timer0Mode_t en_mode,En_timer0OC_t en_OC0,En_timer0perscaler_t en_prescal, 
 				uint8_t u8_initialValue,uint8_t u8_outputCompare, En_timer0Interrupt_t en_interruptMask)
 				{  
+				   uint16_t base_rate = 0;
+				   TCCR0|=(1<<7);
 			       TCCR0|=en_mode;				//set the timer0 mode
 				   TCCR0|=en_OC0;			    //set the output compare pin mode in timer0
 				   TCCR0|=en_prescal;			//set the prescaling value of the timer0
-				   TCNT0|=u8_initialValue;		//set the initial value of the timer0		
-				   OCR0 |=u8_outputCompare;	    //set the compare value 
+				   TCNT0=u8_initialValue;		//set the initial value of the timer0		
+				   OCR0 =u8_outputCompare;	    //set the compare value 
 				   TIMSK|=en_interruptMask;	
 				   prescaler_Timer0 =en_prescal;
-					switch (en_prescal)
-					{
-						case T0_PRESCALER_NO:
-								TickTime=(1/F_CPU)*256;
-								break; 
-						case T0_PRESCALER_8:
-								TickTime=(8/F_CPU)*256;
-								break;
-						case T0_PRESCALER_64:
-								TickTime=(64/F_CPU)*256;
-								break;
-						case T0_PRESCALER_256:
-								TickTime=(256/F_CPU)*256;
-								break;
-						case T0_PRESCALER_1024:
-								TickTime=(1024/F_CPU)*256;
-								break;	
-					}
-
+					
 }
+
+
 //set the timer0			
 void timer0Set(uint8_t u8_value){
 			      	TCNT0 = u8_value;		      //set the value to start from it
@@ -75,6 +79,9 @@ void timer0Stop(void){
 					
 //Delay using the timer
 void timer0DelayMs(uint16_t u16_delay_in_ms){
+					uint16_t overflowcounter =0;
+					uint32_t No_of_Ticks = 0;
+					uint16_t No_of_Overflows = 0;	
 							//OverFlowTicksReq = (u16_delay_in_ms*1000)/TickTime;
 							//Led_Off(LED_0);
 							//timer0Start();
@@ -84,26 +91,31 @@ void timer0DelayMs(uint16_t u16_delay_in_ms){
 							while (! (TIFR & (1<<0)));	
 							TIFR |= (1<<0);	
 							timer0Stop();	
-											        }
+											        }		
 											 }
 
 void timer0DelayUs(uint32_t u32_delay_in_us){
 							/*OverFlowTicksReq = u32_delay_in_us/TickTime;
 							while(OverFlowTicks!=OverFlowTicksReq){}*/
-							while(u32_delay_in_us--){
+							
+							
+						/*	while(u32_delay_in_us--){
 								timer0Start();
 
 								timer0Set(6);
 								while (! (TIFR & (1<<0)));
 								TIFR |= (1<<0);
 								timer0Stop();
-							}	
-								
+							}*/	
+
+											
 											}
 
-//void timer0SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency){
-
-//}
+void timer0SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency){
+	
+	PWM1DC=u8_dutyCycle;
+	timer0Set(176);
+}
 
 
 
@@ -164,10 +176,30 @@ void timer1DelayMs(uint16_t u16_delay_in_ms){
 										}
 
 											}	
+/*void timer1SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency){
+	
+	uint16_t No_Of_Ticks=0; 
+	
+	No_Of_Ticks = F_CPU/(100*prescaler_Timer1*u8_frequency);
+	
+	timer1Init(T1_COMP_MODE_OCR1A_TOP,T1_OC1_DIS,T1_PRESCALER_64,
+				0,No_Of_Ticks,0,0,T1_INTERRUPT_CMP_1A);
+	
+	if(OverFlowTicks>=u8_dutyCycle){
+		gpioPinWrite(T1_SPWM_GPIO,T1_SPWM_BIT,LOW);
+		OverFlowTicks=0;
+	}else if(OverFlowTicks<u8_dutyCycle){
+		gpioPinWrite(T1_SPWM_GPIO,T1_SPWM_BIT,HIGH);
+	}
+	
+}*/
+
 
 //void timer1DelayUs(uint32_t u32_delay_in_us);
 
-//void timer1SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency);		
+
+
+		
 
 
 //Initialize the timer2

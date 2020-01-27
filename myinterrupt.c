@@ -1,12 +1,13 @@
 /*
  * interrupt.c
  */
- 
+/*
 #include "myinterrupt.h"
-
-
+#include "timers.h"
+#include "led.h"
+ //extern uint8_t OverFlowTicks;
  
-void EXTERNAL_INTERRUPT0_vect (void)
+void EXTERNAL_INTERRUPT0_vect ()
 {
 
 }
@@ -53,6 +54,11 @@ void TIMER1_COMPARE_B_vect (void)
 }
 
 
+void TIMER0_OVRF_vect (TIMER0_OVRF_vect)
+{
+
+}
+
 void TIMER1_OVF_vect (void)
 {
 
@@ -60,7 +66,7 @@ void TIMER1_OVF_vect (void)
 
 void TIMER0_COMPARE_vect (void)
 {
-
+	
 }
 
 
@@ -107,7 +113,7 @@ void SPM_RDY_INTERRUPT_vect (void)
 }
 
 
-
+*/
 
 
 
