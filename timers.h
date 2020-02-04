@@ -19,6 +19,12 @@
 #define Get_Bit(PORT,PIN)  ((PORT>>PIN) & 1)
 
 
+<<<<<<< HEAD
+=======
+#define T2_PWM_GPIO GPIOD
+#define T2_PWM_BIT	BIT2
+
+>>>>>>> 7e397dab1adb33e77ae1558ae482332d69f4c058
 #define T0_SPWM_GPIO GPIOC
 #define T0_SPWM_BIT	BIT2
 
@@ -72,10 +78,14 @@ typedef enum En_timer1perscaler_t{
 }En_timer1perscaler_t;
 
 typedef enum En_timer1Interrupt_t{
+<<<<<<< HEAD
 	
 	T1_POLLING=0,T1_INTERRUPT_NORMAL=0x04,T1_INTERRUPT_CMP_1B=0x08, T1_INTERRUPT_CMP_1A=0x10, 
 	T1_INTERRUPT_ICAPTURE = 0x20
 
+=======
+	T1_POLLING=0,T1_INTERRUPT_NORMAL=0x04,T1_INTERRUPT_CMP_1B=0x08, T1_INTERRUPT_CMP_1A=0x10, T1_INTERRUPT_ICAPTURE = 0x20
+>>>>>>> 7e397dab1adb33e77ae1558ae482332d69f4c058
 }En_timer1Interrupt_t;
 
 

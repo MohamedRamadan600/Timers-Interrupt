@@ -44,9 +44,12 @@
 #include "myinterrupt.h"
 #include <util/delay.h>
 #include "dcMotor.h"
+<<<<<<< HEAD
 #include "HwPWM.h"
 #include "registers.h"
 
+=======
+>>>>>>> 7e397dab1adb33e77ae1558ae482332d69f4c058
 
 //#define PulseTime  (4*256)
 
@@ -60,6 +63,7 @@ extern volatile uint8_t Edge_Status_Control;
 /*
  InterruptServiceRoutine(TIMER0_OVRF_vect)
 {
+<<<<<<< HEAD
 
 Led_Toggle(LED_1);
 /*if()
@@ -110,6 +114,16 @@ int main (void)
 	//MCUCSR|= (1<<6);	
 	SwICU_SetCfgEdge(SwICU_EdgeRisiging);
 	HwPWMSetDuty(75,250);	
+	
+	//Requirement 2 of driving the car until 
+	//detecting obstacles and stop before it by 5 cm.
+	
+	while (1)
+	{
+		
+	}
+/*
+//Detecting distance of 15 seconds and output the result on the leds
 while(1){
 	
 	//start sending trigger signal 
@@ -120,6 +134,7 @@ while(1){
 	 PORTB_DATA |=(distance<<4);
 	
 }
+*/
 return 0;
 	}
 
@@ -166,3 +181,43 @@ InterruptServiceRoutine(EXTERNAL_INTERRUPT2_vect){
 		TCNT0 = 0;	
 	}
 }
+=======
+	
+	timer0Init(T0_NORMAL_MODE,T0_OC0_DIS,T0_PRESCALER_8,0,0,T0_INTERRUPT_NORMAL);
+	timer2Init(T2_NORMAL_MODE,T2_OC2_DIS,T2_PRESCALER_64,0,0,0,T2_POLLING);
+	MotorDC_Init(MOT_1);
+	MotorDC_Init(MOT_2);
+	
+	SREG |= (1<<7);							//enable Global interrupt
+			
+				/*Testing LED Driver Functions*/
+				
+//Moving Forward for 5 seconds
+		MotorDC_Dir(MOT_1,FORWARD);
+		MotorDC_Dir(MOT_2,FORWARD);
+		MotorDC_Speed_PollingWithT0(50);
+		MotorDC_Dir(MOT_1,STOP);
+		MotorDC_Dir(MOT_2,STOP);
+		
+//moving Backward for 5 seconds
+		MotorDC_Dir(MOT_1,BACKWARD);
+		MotorDC_Dir(MOT_2,BACKWARD);
+		MotorDC_Speed_PollingWithT0(50);
+		MotorDC_Dir(MOT_1,STOP);
+		MotorDC_Dir(MOT_2,STOP);
+		timer0Stop();
+//Roate By 90 degree		
+		MotorDC_Dir(MOT_1,FORWARD);
+		MotorDC_Dir(MOT_2,STOP);
+		gpioPinWrite(GPIOD,BIT4,HIGH);
+		timer2DelayMs(100);
+		MotorDC_Dir(MOT_1,STOP);
+		MotorDC_Dir(MOT_2,STOP);
+				
+		while(1){
+	
+		}
+	
+	return 0;	
+		}
+>>>>>>> 7e397dab1adb33e77ae1558ae482332d69f4c058

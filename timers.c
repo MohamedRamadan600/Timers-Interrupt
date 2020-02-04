@@ -4,7 +4,8 @@
 #include "myinterrupt.h"
 #include "dcMotor.h"
 
-#define F_CPU    16000000								//16MHZ
+
+
 uint16_t TickTime=0;	
 uint16_t prescaler_Timer0;						//global variable to store the time of the clock
 												//cycle after prescaling in timer0
@@ -18,7 +19,9 @@ uint16_t OverFlowTicksReq=0;
 volatile uint8_t OverFlowTicks=0;				//global variable to check the number of over flows to match the time delay
 uint8_t PWM1DC=0;            
 uint8_t SPWM_Flag=0;
+
 uint8_t Motor_Enable = 0;
+
 
 
 InterruptServiceRoutine(TIMER0_OVRF_vect)
@@ -28,11 +31,14 @@ if(SPWM_Flag==PWM1DC){
 gpioPinWrite(MOTOR_EN_1_GPIO,MOTOR_EN_1_BIT,LOW);
 gpioPinWrite(MOTOR_EN_2_GPIO,MOTOR_EN_2_BIT,LOW);
 
+
 //gpioPinWrite(GPIOD,BIT4,LOW);
+
 }
 if(SPWM_Flag==100){
 	gpioPinWrite(MOTOR_EN_1_GPIO,MOTOR_EN_1_BIT,HIGH);
 	gpioPinWrite(MOTOR_EN_2_GPIO,MOTOR_EN_2_BIT,HIGH);
+
 
 //gpioPinWrite(GPIOD,BIT4,HIGH);
 SPWM_Flag=0;
@@ -51,6 +57,11 @@ timer0Set(176);
 	}*/
 
 //softwareDelayMs(1000);
+
+SPWM_Flag=0;
+}
+timer0Set(176);
+
 }
 
 //initialize timer0
@@ -61,7 +72,11 @@ void timer0Init(En_timer0Mode_t en_mode,En_timer0OC_t en_OC0,En_timer0perscaler_
 				   TCCR0|=(1<<7);
 			       TCCR0|=en_mode;				//set the timer0 mode
 				   TCCR0|=en_OC0;			    //set the output compare pin mode in timer0
+
 				   //TCCR0|=en_prescal;			//set the prescaling value of the timer0
+
+				   TCCR0|=en_prescal;			//set the prescaling value of the timer0
+
 				   TCNT0=u8_initialValue;		//set the initial value of the timer0		
 				   OCR0 =u8_outputCompare;	    //set the compare value 
 				   TIMSK|=en_interruptMask;	
@@ -86,8 +101,11 @@ void timer0Init(En_timer0Mode_t en_mode,En_timer0OC_t en_OC0,En_timer0perscaler_
 					}
 					base_rate = F_CPU/prescaler_Timer0;
 					tick_time = (1*10^9)/base_rate;*/
+
 					
 }
+
+
 //set the timer0			
 void timer0Set(uint8_t u8_value){
 			      	TCNT0 = u8_value;		      //set the value to start from it
@@ -126,6 +144,7 @@ void timer0DelayMs(uint16_t u16_delay_in_ms){
 							while (! (TIFR & (1<<0)));	
 							TIFR |= (1<<0);	
 							timer0Stop();	
+
 											        }
 		/*	timer0Start();		
 			No_of_Ticks = (u16_delay_in_ms/tick_time);
@@ -136,6 +155,7 @@ void timer0DelayMs(uint16_t u16_delay_in_ms){
 			} 	
 			timer0Stop();	*/						
 											
+
 											 }
 
 void timer0DelayUs(uint32_t u32_delay_in_us){
@@ -156,6 +176,7 @@ void timer0DelayUs(uint32_t u32_delay_in_us){
 											}
 
 void timer0SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency){
+<<<<<<< HEAD
 	//uint8_t No_Of_Ticks=0;
 	//uint8_t cycletime= (float)1/u8_frequency;
 	//gpioPinWrite(GPIOB,BIT1,HIGH);
@@ -168,9 +189,11 @@ void timer0SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency){
 	softwareDelayMs(1000);
 	}*/
 	
-	//timer0Init(T0_COMP_MODE,T0_OC0_DIS,T0_PRESCALER_8,0,80,T0_INTERRUPT_CMP);
-		
-					
+	//timer0Init(T0_COMP_MODE,T0_OC0_DIS,T0_PRESCALER_8,0,80,T0_INTERRUPT_CMP
+	
+	PWM1DC=u8_dutyCycle;
+	timer0Set(176);
+
 }
 
 
@@ -278,6 +301,12 @@ void timer1SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency){
 		
 	}
 }*/
+
+
+
+//void timer1DelayUs(uint32_t u32_delay_in_us);
+
+
 
 
 		

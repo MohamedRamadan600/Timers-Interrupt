@@ -1,5 +1,5 @@
 #include "dcMotor.h"
-
+#include "HwPWM.h"
 
 //Initialize the DC motor Pins
 
@@ -85,3 +85,9 @@ void MotorDC_Speed_PollingWithT0(uint8_t u8_motor_speed){
 		
 	}
 	
+void MotorDC_Speed_HwPWM(uint8_t u8_motor_speed){
+	
+	//move the motor of certain speed 
+	HwPWMSetDuty(u8_motor_speed,250);
+	
+}

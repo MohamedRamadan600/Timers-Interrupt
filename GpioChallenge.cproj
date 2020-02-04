@@ -193,6 +193,7 @@
     <Compile Include="dcMotor.c">
       <SubType>compile</SubType>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="extint.c">
       <SubType>compile</SubType>
     </Compile>
@@ -202,6 +203,8 @@
     <Compile Include="HwPWM.h">
       <SubType>compile</SubType>
     </Compile>
+=======
+>>>>>>> 7e397dab1adb33e77ae1558ae482332d69f4c058
     <Compile Include="led.c">
       <SubType>compile</SubType>
     </Compile>
