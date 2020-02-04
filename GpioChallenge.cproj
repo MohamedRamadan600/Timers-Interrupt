@@ -63,6 +63,19 @@
         <board id="board.user_board.mega" value="Add" config="" content-id="Atmel.ASF" />
       </framework-data>
     </AsfFrameworkConfig>
+    <avrtool>com.atmel.avrdbg.tool.simulator</avrtool>
+    <avrtoolserialnumber />
+    <avrdeviceexpectedsignature>0x1E9502</avrdeviceexpectedsignature>
+    <com_atmel_avrdbg_tool_simulator>
+      <ToolOptions xmlns="">
+        <InterfaceProperties>
+        </InterfaceProperties>
+      </ToolOptions>
+      <ToolType xmlns="">com.atmel.avrdbg.tool.simulator</ToolType>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <ToolName xmlns="">Simulator</ToolName>
+    </com_atmel_avrdbg_tool_simulator>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -177,6 +190,18 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="dcMotor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="extint.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HwPWM.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HwPWM.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="led.c">
       <SubType>compile</SubType>
     </Compile>
@@ -205,6 +230,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="std_types.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SwICU.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SwICU.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="timers.c">
@@ -247,6 +278,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="softwareDelay.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ultrasonic.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ultrasonic.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

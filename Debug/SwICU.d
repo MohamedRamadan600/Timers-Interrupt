@@ -1,30 +1,15 @@
-main.d main.o: .././main.c .././ultrasonic.h .././gpio.h .././std_types.h \
- .././pushButton.h .././pushButtonConfig.h .././softwareDelay.h \
- .././led.h .././ledConfig.h .././SwICU.h .././myinterrupt.h \
- .././timers.h .././registers.h \
+SwICU.d SwICU.o: .././SwICU.c .././extint.h .././SwICU.h \
+ .././myinterrupt.h .././timers.h .././registers.h .././std_types.h \
+ .././gpio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
- .././dcMotor.h .././dcMotorConfig.h .././HwPWM.h
+ .././led.h .././ledConfig.h
 
-.././ultrasonic.h:
-
-.././gpio.h:
-
-.././std_types.h:
-
-.././pushButton.h:
-
-.././pushButtonConfig.h:
-
-.././softwareDelay.h:
-
-.././led.h:
-
-.././ledConfig.h:
+.././extint.h:
 
 .././SwICU.h:
 
@@ -33,6 +18,10 @@ main.d main.o: .././main.c .././ultrasonic.h .././gpio.h .././std_types.h \
 .././timers.h:
 
 .././registers.h:
+
+.././std_types.h:
+
+.././gpio.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h:
 
@@ -46,8 +35,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h:
 
-.././dcMotor.h:
+.././led.h:
 
-.././dcMotorConfig.h:
-
-.././HwPWM.h:
+.././ledConfig.h:

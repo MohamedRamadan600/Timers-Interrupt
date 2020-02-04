@@ -2,6 +2,12 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+dcMotor.c
+
+extint.c
+
+HwPWM.c
+
 led.c
 
 main.c
@@ -18,7 +24,11 @@ SevenSegApp.c
 
 softwareDelay.c
 
+SwICU.c
+
 timers.c
 
 gpio.c
+
+ultrasonic.c
 

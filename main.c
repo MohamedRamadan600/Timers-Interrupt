@@ -34,44 +34,135 @@
 /*
  * Support and FAQ: visit <a href="https://www.microchip.com/support/">Microchip Support</a>
  */
-//#include <asf.h>
+#define F_CPU 16000000UL
+#include "ultrasonic.h"
 #include "gpio.h"
 #include "pushButton.h"
 #include "led.h"
+#include "SwICU.h"
 #include "timers.h"
 #include "myinterrupt.h"
+#include <util/delay.h>
+#include "dcMotor.h"
+#include "HwPWM.h"
+#include "registers.h"
+
+
+//#define PulseTime  (4*256)
+
+volatile uint8_t  gu_IC_SW;		//global unsigned input capture pointer 
+extern volatile uint8_t Edge_Status_Control;
+
+//#include "avr/interrupt.h"
+
+
 
 /*
-#include "avr/interrupt.h"
-*/
-extern uint16_t OverFlowTicks;
+ InterruptServiceRoutine(TIMER0_OVRF_vect)
+{
 
+Led_Toggle(LED_1);
+/*if()
+gpioPinWrite(T0_SPWM_GPIO,T0_SPWM_BIT,HIGH);*/
+
+	/*OverFlowTicks++;
+	Led_On(LED_0);
+	softwareDelayMs(1000);
+	
+	if(OverFlowTicks % 100 == 25){
+		gpioPinWrite(T0_SPWM_GPIO,T0_SPWM_BIT,LOW);
+		
+	}elseif(OverFlowTicks % 100 == 0){
+		gpioPinWrite(T0_SPWM_GPIO,T0_SPWM_BIT,HIGH);
+		OverFlowTicks=0;
+	}*/
+
+//softwareDelayMs(1000);
+//}
+
+
+
+volatile uint16_t distance = 0;
 
 int main (void)
 {
-		
-
-	/* Insert system clock initialization code here (sysclk_init()). */
-				/*Testing GPIO Functions*/
-	gpioPinDirection(LED_0_GPIO,LED_0_BIT|LED_1_BIT|LED_2_BIT|LED_3_BIT,OUTPUT);
-	gpioPinDirection(BTN_0_GPIO,BTN_0_BIT|BTN_1_BIT,INPUT);
-	gpioPinDirection(BTN_1_GPIO,BTN_1_BIT,INPUT);
+	//initialize led 1	
 	Led_Init(LED_0);
-	//SREG |= (1<<7);
-	Set_Bit(SREG,7);						//set Global interrupt
-	timer0Init(T0_NORMAL_MODE, T0_OC0_DIS,T0_PRESCALER_64,0,0,T0_POLLING);
-	timer1Init(T1_COMP_MODE_OCR1A_TOP,T1_OC1_DIS,T1_PRESCALER_64,0, 250, 0,0,T1_POLLING);
-    timer2Init(T2_NORMAL_MODE,T2_OC2_DIS,T2_PRESCALER_64,0,0,0,T2_POLLING);
-
+	//initialize led 2
+	Led_Init(LED_1);
+	//initialize led 3
+	Led_Init(LED_2);
+	//initialize led 4
+	Led_Init(LED_3);
+	//initialize Hardware PWM
+	HwPWMInit();		
 	
-				
-				/*Testing LED Driver Functions*/
-while(1){	
-	Led_On(LED_0);
-	timer2DelayMs(1000);
-	Led_Off(LED_0);
-	timer2DelayMs(1000);
+	//initialize icu
+	SwICU_Init(SwICU_EdgeRisiging);
+	//Enable ICU
+	SwICU_Enable();
+	//Initialize ultrasonic
+	Ultrasonic_Init();
+	//setting Global Interrupt
+	SREG|=(1<<7);	
+	//initialize timer2
+	timer0Init(T0_NORMAL_MODE,T0_OC0_DIS,T0_PRESCALER_256,0,0,T0_POLLING);	
+	//MCUCSR|= (1<<6);	
+	SwICU_SetCfgEdge(SwICU_EdgeRisiging);
+	HwPWMSetDuty(75,250);	
+while(1){
+	
+	//start sending trigger signal 
+	Ultrasonic_Start();
+	//distance = (uint16_t)(0.272*TCNT0);
+	 distance = (uint16_t) ((68*((gu_IC_SW)))/1000);
+	 //output the distance on the leds
+	 PORTB_DATA |=(distance<<4);
+	
 }
+return 0;
+	}
+
+/*
+//main testing PWM hardware generation
+int main(void){
+	Led_Init(LED_0);
 	
-return 0;	
+	HwPWMInit();
+	HwPWMSetDuty(75,250);
+	
+	
+	
+	while (1)
+	{
+		
+	}
+	
+	return 0;
+}
+	*/
+InterruptServiceRoutine(EXTERNAL_INTERRUPT2_vect){
+	/*check if the trigger is rising edge*/
+	//Led_On(LED_0);
+	if (Edge_Status_Control == SwICU_EdgeRisiging)
+	{
+	
+		
+		//start timer2 counting and prescaling
+		timer0Start();
+		//writing falling edge on external interrupt
+		SwICU_SetCfgEdge(SwICU_EdgeFalling);
+		GIFR &=~(1<<5);	
+	}
+	else if (Edge_Status_Control == SwICU_EdgeFalling)
+	{
+		//read the counter value in SwICU_Read function
+		SwICU_Read(&gu_IC_SW);
+		//change the scene control to Rising edge on external interrupt
+		SwICU_SetCfgEdge(SwICU_EdgeRisiging);
+		//stop timer2
+		timer0Stop();
+		//reinitialize the counter 0
+		TCNT0 = 0;	
+	}
 }
